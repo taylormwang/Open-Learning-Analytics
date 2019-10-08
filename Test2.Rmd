@@ -1,0 +1,63 @@
+---
+title: "Test1"
+author: "Minruo Wang"
+date: "10/8/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(dplyr)
+D1 <- read.csv("studentInfo.csv", header = TRUE)
+D2 <- read.csv("studentAssessment.csv", header = TRUE)
+D3 <- select(D1, id_student, age_band, studied_credits)
+
+head(D3, 200)
+
+```
+
+
+
+```{r}
+library(tidyr)
+D4 <- spread(D3, age_band, studied_credits, 2:3)
+DR <- gather(D4, id_student, 2:4)
+
+```
+
+Q14. What are the average scores in the "studentAssessment" dataset for the following student IDs in this order:
+
+25261, 42818, 70827, 610573
+```{r}
+library(tidyverse)
+D2 %>%
+  filter(id_student == 25261) %>%
+  summarize(mean_score = mean(score))
+```
+
+
+Q16. How many rows are there in the data frame if you join matching rows from the studentAssessment to the studentInfo dataset according to student ID?
+
+```{r}
+merge(D2, D1, by = "id_student", all = TRUE)
+```
+
+
+
+
+
+
+
+
+
+
+
